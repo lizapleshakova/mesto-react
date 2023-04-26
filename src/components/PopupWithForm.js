@@ -14,7 +14,6 @@ function PopupWithForm({ name, title, buttonText, children, isOpen, onClose }) {
 }
 export default PopupWithForm
 
-// name: edit-profile, add-content, edit-avatar, delete-img
-// title: Редактировать профиль, Новое место, Обновить аватар,Вы уверены?
+
 
 

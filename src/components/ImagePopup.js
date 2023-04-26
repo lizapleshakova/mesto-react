@@ -1,11 +1,11 @@
-function ImagePopup() {
+function ImagePopup({card, onClose, isOpen}) {
     return (
-        <div class="popup popup_zoom-content">
-            <div class="popup__image-container">
-                <button type="button" aria-label="Закрыть модальное окно" class="button popup__close-btn"></button>
-                <figure class="popup__figure">
-                    <img class="popup__zoom-image" src="#" alt="" />
-                    <figcaption class="popup__image-caption"></figcaption>
+        <div className={`popup popup_zoom-content popup_opened`}>
+            <div className="popup__image-container">
+                <button type="button" aria-label="Закрыть модальное окно" className="button popup__close-btn"  onClick={onClose}></button>
+                <figure className="popup__figure">
+                    <img className="popup__zoom-image" src={card ? card.link : "#"} alt="" />
+                    <figcaption className="popup__image-caption">{card.name}</figcaption>
                 </figure>
             </div>
         </div>

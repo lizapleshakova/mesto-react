@@ -1,7 +1,9 @@
-function Card({onCardClick, data}) {
+function Card({onCardClick, data, onZoomImage}) {
     function handleClick() {
         onCardClick(data);
     }
+
+   
 
     return (
         <article className="card">
@@ -13,7 +15,7 @@ function Card({onCardClick, data}) {
                     <p className="card__like-counter">{data.likes.length}</p>
                 </div>
             </div>
-            <button type="button" aria-label="Удалить" className="card__delete button"></button>
+            <button type="button" aria-label="Удалить" className="card__delete button" ></button>
         </article >
     )
 }

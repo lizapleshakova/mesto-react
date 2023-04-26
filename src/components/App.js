@@ -1,16 +1,17 @@
+import { useState } from 'react'
 
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
-import { useState } from 'react'
+import ImagePopup from './ImagePopup';
 
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddContentPopupOpen, setIsAddContentPopupOpen] = useState(false)
-
+  const [selectedCard, setSelectedCard] = useState(false) 
 
   // Функции-сеттеры
   function handleEditProfileClick() {
@@ -24,16 +25,20 @@ function App() {
   function handleAddPlaceClick() {
     setIsAddContentPopupOpen(true)
   }
+  
+
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+  }
 
   // Функция закрытия всех попапов
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
     setIsAddContentPopupOpen(false)
+      setSelectedCard(false) /////
 
   }
-
-
 
   return (
     <>
@@ -42,8 +47,13 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onEditAvatar={handleEditAvatarClick}
         onAddPlace={handleAddPlaceClick}
+        onCardClick={handleCardClick}
+        onClose={closeAllPopups}
       />
       <Footer />
+
+      {/* name: edit-profile, add-content, edit-avatar, delete-img
+      title: Редактировать профиль, Новое место, Обновить аватар,Вы уверены? */}
 
       <PopupWithForm name='edit-profile' title='Редактировать профиль' buttonText='Сохранить' onClose={closeAllPopups} isOpen={isEditProfilePopupOpen}>
         <input type="text" name="name" id="name-input" className="popup__input popup__input_form_usermane" minlength="2" maxlength="40" required />
@@ -64,8 +74,11 @@ function App() {
         <span class="popup__input-error img-url-input-error"></span>
       </PopupWithForm>
 
-      <PopupWithForm name='delete-img' title='Вы уверены?' buttonText='Да' onClose={closeAllPopups}></PopupWithForm>
+      {/* <PopupWithForm name='delete-img' title='Вы уверены?' buttonText='Да' onClose={closeAllPopups} ></PopupWithForm> */}
 
+      {selectedCard && (
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+      )}
     </>
   );
 }

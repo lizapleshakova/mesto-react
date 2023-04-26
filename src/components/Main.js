@@ -36,7 +36,7 @@ function Main(props) {
 
                 <div className="profile__info">
                     <div className="profile__avatar-container" onClick={props.onEditAvatar}>
-                        <img src={userAvatar} alt="Прокудин-Горский. Фотограф"
+                        <img src={userAvatar} alt="Аватар"
                             className="profile__image" />
                     </div>
 
@@ -54,7 +54,7 @@ function Main(props) {
             <section className="elements">
 
                 {cards.map((card) => (
-                    <Card key={card._id} data={card} onCardClick={props.onCardClick} onClose={props.onClose}  />
+                    <Card key={card._id} data={card} onCardClick={props.onCardClick} onClose={props.onClose}/>
                 ))}
 
             </section>
