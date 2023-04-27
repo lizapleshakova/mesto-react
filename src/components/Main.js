@@ -29,7 +29,6 @@ function Main(props) {
             .catch((err) => console.log(`Ошибка получения данных: ${err}`));
     }, [])
 
-
     return (
         <main className="content">
             <section className="profile">
