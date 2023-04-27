@@ -1,9 +1,7 @@
-function Card({onCardClick, data, onZoomImage}) {
+function Card({onCardClick, data}) {
     function handleClick() {
         onCardClick(data);
     }
-
-   
 
     return (
         <article className="card">

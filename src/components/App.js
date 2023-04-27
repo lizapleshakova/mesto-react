@@ -11,7 +11,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddContentPopupOpen, setIsAddContentPopupOpen] = useState(false)
-  const [selectedCard, setSelectedCard] = useState(false) 
+  const [selectedCard, setSelectedCard] = useState(null) 
 
   // Функции-сеттеры
   function handleEditProfileClick() {
@@ -26,7 +26,6 @@ function App() {
     setIsAddContentPopupOpen(true)
   }
   
-
   const handleCardClick = (card) => {
     setSelectedCard(card);
   }
@@ -36,8 +35,7 @@ function App() {
     setIsEditProfilePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
     setIsAddContentPopupOpen(false)
-      setSelectedCard(false) /////
-
+    setSelectedCard(null) /////
   }
 
   return (
@@ -53,7 +51,7 @@ function App() {
       <Footer />
 
       {/* name: edit-profile, add-content, edit-avatar, delete-img
-      title: Редактировать профиль, Новое место, Обновить аватар,Вы уверены? */}
+      title: Редактировать профиль, Новое место, Обновить аватар, Вы уверены? */}
 
       <PopupWithForm name='edit-profile' title='Редактировать профиль' buttonText='Сохранить' onClose={closeAllPopups} isOpen={isEditProfilePopupOpen}>
         <input type="text" name="name" id="name-input" className="popup__input popup__input_form_usermane" minlength="2" maxlength="40" required />
