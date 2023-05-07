@@ -37,7 +37,8 @@ function Main(props) {
                     data={card} 
                     onCardClick={props.onCardClick} 
                     onClose={props.onClose}
-                    onCardLike={props.onCardLike}/>
+                    onCardLike={props.onCardLike}
+                    onDeleteLike={props.onDeleteLike} />
                 ))}
 
             </section>

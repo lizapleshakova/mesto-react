@@ -73,6 +73,17 @@ function App() {
       .catch((err) => console.log(`Ошибка получения данных: ${err}`));
   }
 
+  // удалить карточку
+  function handleDeleteClick(data) {
+    api
+      .removeCard(data._id)
+      .then(() => setCards(
+        state => state.filter(
+          item => item._id !== data._id)))
+      .catch((err) => console.log(`Ошибка получения данных: ${err}`));
+  }
+
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
@@ -84,6 +95,7 @@ function App() {
         onCardClick={handleCardClick}
         onClose={closeAllPopups}
         onCardLike={handleLike}
+        onDeleteLike={handleDeleteClick}
       />
       <Footer />
 
