@@ -1,33 +1,12 @@
-import { useState, useEffect } from "react"
+import {useContext } from "react";
 
-import avatarPath from '../images/profile__selfie.jpg';
-import api from '../untils/Api'
-import Card from './Card'
+
+import Card from './Card';
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
-    const [userName, setUserName] = useState('')
-    const [userDescription, setUserDescription] = useState('')
-    const [userAvatar, setUserAvatar] = useState('')
-    const [cards, setCards] = useState([]);
 
-
-    useEffect(() => {
- // Получение данных о пользователе
-        api.getUserInfo()
-            .then((data) => {
-
-                setUserName(data.name)
-                setUserDescription(data.about)
-                setUserAvatar(data.avatar)
-            })
-            .catch((err) => console.log(`Ошибка получения данных: ${err}`));
-// получение карточек
-        api.getCards()
-            .then((data) => {
-                setCards(data);
-            })
-            .catch((err) => console.log(`Ошибка получения данных: ${err}`));
-    }, [])
+    const currentUser = useContext(CurrentUserContext)
 
     return (
         <main className="content">
@@ -35,16 +14,16 @@ function Main(props) {
 
                 <div className="profile__info">
                     <div className="profile__avatar-container" onClick={props.onEditAvatar}>
-                        <img src={userAvatar} alt="Аватар"
+                        <img src={currentUser.avatar} alt="Аватар"
                             className="profile__image" />
                     </div>
 
                     <div className="profile__bio">
                         <div className="profile__name-edit">
-                            <h1 className="profile__name">{userName}</h1>
+                            <h1 className="profile__name">{currentUser.name}</h1>
                             <button onClick={props.onEditProfile} type="button" aria-label="Редактировать профиль" className="profile__edit-btn button"></button>
                         </div>
-                        <p className="profile__description">{userDescription}</p>
+                        <p className="profile__description">{currentUser.description}</p>
                     </div>
                 </div>
                 <button type="button" aria-label="Добавить изображение" className="profile__add-btn button" onClick={props.onAddPlace}></button>
@@ -52,8 +31,13 @@ function Main(props) {
 
             <section className="elements">
 
-                {cards.map((card) => (
-                    <Card key={card._id} data={card} onCardClick={props.onCardClick} onClose={props.onClose}/>
+                {props.cards.map((card) => (
+                    <Card 
+                    key={card._id} 
+                    data={card} 
+                    onCardClick={props.onCardClick} 
+                    onClose={props.onClose}
+                    onCardLike={props.onCardLike}/>
                 ))}
 
             </section>

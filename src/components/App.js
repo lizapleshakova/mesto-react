@@ -1,17 +1,40 @@
-import { useState } from 'react'
+
+import { useState, useEffect } from "react";
+import api from '../untils/Api';
 
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 function App() {
+
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddContentPopupOpen, setIsAddContentPopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState(null)
+
+
+  useEffect(() => {
+    api
+      .getUserInfo()
+      .then((data) => {
+        setCurrentUser(data);
+      })
+      .catch((err) => console.log(`Ошибка получения данных: ${err}`));
+    api
+      .getCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => console.log(`Ошибка получения данных: ${err}`));
+  }, []);
+
 
   // Функции-сеттеры
   function handleEditProfileClick() {
@@ -38,15 +61,29 @@ function App() {
     setSelectedCard(null) /////
   }
 
+  // Лайки
+  function handleLike(data) {
+    const isLiked = data.likes.some(user => user._id === currentUser._id);
+    api
+      .toggleLike(data._id, !isLiked)
+      .then(newCard => setCards((
+        state) => state.map(
+          item => item._id === data._id ? newCard : item)))
+
+      .catch((err) => console.log(`Ошибка получения данных: ${err}`));
+  }
+
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser}>
       <Header />
       <Main
+        cards={cards}
         onEditProfile={handleEditProfileClick}
         onEditAvatar={handleEditAvatarClick}
         onAddPlace={handleAddPlaceClick}
         onCardClick={handleCardClick}
         onClose={closeAllPopups}
+        onCardLike={handleLike}
       />
       <Footer />
 
@@ -92,7 +129,7 @@ function App() {
       {selectedCard && (
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       )}
-    </>
+    </CurrentUserContext.Provider>
   );
 }
 

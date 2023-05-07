@@ -60,21 +60,21 @@
   }
 
   // Поставить лайк
-  addLike(_id) {
+  toggleLike(_id, isLiked) {
     return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
-      method: "PUT",
+      method: `${isLiked ? 'PUT' : 'DELETE'}`,
       headers: this._headers,
     })
       .then(this._handleResponse);
   }
-  // Удалить лайк
-  removeLike(_id) {
-    return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
-      method: "DELETE",
-      headers: this._headers,
-    })
-      .then(this._handleResponse);
-  }
+  // // Удалить лайк
+  // removeLike(_id) {
+  //   return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
+  //     method: "DELETE",
+  //     headers: this._headers,
+  //   })
+  //     .then(this._handleResponse);
+  // }
 
   // Удалить карточку
   removeCard(_id) {
