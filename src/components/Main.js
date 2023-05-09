@@ -23,7 +23,7 @@ function Main(props) {
                             <h1 className="profile__name">{currentUser.name}</h1>
                             <button onClick={props.onEditProfile} type="button" aria-label="Редактировать профиль" className="profile__edit-btn button"></button>
                         </div>
-                        <p className="profile__description">{currentUser.description}</p>
+                        <p className="profile__description">{currentUser.about}</p>
                     </div>
                 </div>
                 <button type="button" aria-label="Добавить изображение" className="profile__add-btn button" onClick={props.onAddPlace}></button>

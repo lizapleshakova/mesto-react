@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import api from '../untils/Api';
 
@@ -6,11 +5,13 @@ import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from './ImagePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 function App() {
-
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
 
@@ -18,7 +19,6 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddContentPopupOpen, setIsAddContentPopupOpen] = useState(false)
   const [selectedCard, setSelectedCard] = useState(null)
-
 
   useEffect(() => {
     api
@@ -83,6 +83,35 @@ function App() {
       .catch((err) => console.log(`Ошибка получения данных: ${err}`));
   }
 
+  function handleUpdateUser(newUserData) {
+    api
+      .setProfile(newUserData)
+      .then(data => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(`Ошибка получения данных: ${err}`));
+  }
+
+  function handleUpdateAvatar(newAvatar) {
+    api
+      .setAvatar(newAvatar)
+      .then(data => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(`Ошибка получения данных: ${err}`));
+  }
+
+  function handleAddPlaceSubmit(data) {
+    api
+    .setCard(data)
+    .then((newCard) => {
+      setCards([newCard, ...cards]);
+      closeAllPopups();
+    })
+    .catch((err) => console.log(`Ошибка получения данных: ${err}`));
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -102,39 +131,11 @@ function App() {
       {/* name: edit-profile, add-content, edit-avatar, delete-img
       title: Редактировать профиль, Новое место, Обновить аватар, Вы уверены? */}
 
-      <PopupWithForm
-        name='edit-profile'
-        title='Редактировать профиль'
-        buttonText='Сохранить'
-        onClose={closeAllPopups}
-        isOpen={isEditProfilePopupOpen}>
-        <input type="text" name="name" id="name-input" className="popup__input popup__input_form_usermane" minLength="2" maxLength="40" required />
-        <span className="popup__input-error name-input-error"></span>
-        <input type="text" name="about" id="description-input" className="popup__input popup__input_form_description" minLength="2" maxLength="200" required />
-        <span className="popup__input-error description-input-error"></span>
-      </PopupWithForm>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
-      <PopupWithForm
-        name='edit-avatar'
-        title='Обновить аватар'
-        buttonText='Сохранить'
-        onClose={closeAllPopups}
-        isOpen={isEditAvatarPopupOpen}>
-        <input type="url" placeholder="Ссылка на картинку" name="avatar" id="avatar-url-input" className="popup__input popup__input_form_url" required />
-        <span className="popup__input-error avatar-url-input-error"></span>
-      </PopupWithForm>
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
 
-      <PopupWithForm
-        name='add-content'
-        title='Новое место'
-        buttonText='Создать'
-        onClose={closeAllPopups}
-        isOpen={isAddContentPopupOpen}>
-        <input type="text" placeholder="Название" name="img_name" id="img-name-input" className="popup__input popup__input_form_image-title" minLength="2" maxLength="30" required />
-        <span className="popup__input-error img-name-input-error"></span>
-        <input type="url" placeholder="Ссылка на картинку" name="img_url" id="img-url-input" className="popup__input popup__input_form_url" required />
-        <span className="popup__input-error img-url-input-error"></span>
-      </PopupWithForm>
+      <AddPlacePopup isOpen={isAddContentPopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>    
 
       {/* <PopupWithForm name='delete-img' title='Вы уверены?' buttonText='Да' onClose={closeAllPopups} ></PopupWithForm> */}
 
