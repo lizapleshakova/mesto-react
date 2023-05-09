@@ -4,7 +4,6 @@ import api from '../untils/Api';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
-import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
@@ -35,7 +34,6 @@ function App() {
       .catch((err) => console.log(`Ошибка получения данных: ${err}`));
   }, []);
 
-
   // Функции-сеттеры
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true)
@@ -58,7 +56,7 @@ function App() {
     setIsEditProfilePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
     setIsAddContentPopupOpen(false)
-    setSelectedCard(null) /////
+    setSelectedCard(null)
   }
 
   // Лайки
@@ -105,12 +103,12 @@ function App() {
 
   function handleAddPlaceSubmit(data) {
     api
-    .setCard(data)
-    .then((newCard) => {
-      setCards([newCard, ...cards]);
-      closeAllPopups();
-    })
-    .catch((err) => console.log(`Ошибка получения данных: ${err}`));
+      .setCard(data)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(`Ошибка получения данных: ${err}`));
   }
 
   return (
@@ -128,14 +126,11 @@ function App() {
       />
       <Footer />
 
-      {/* name: edit-profile, add-content, edit-avatar, delete-img
-      title: Редактировать профиль, Новое место, Обновить аватар, Вы уверены? */}
-
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
-      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
-      <AddPlacePopup isOpen={isAddContentPopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>    
+      <AddPlacePopup isOpen={isAddContentPopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
 
       {/* <PopupWithForm name='delete-img' title='Вы уверены?' buttonText='Да' onClose={closeAllPopups} ></PopupWithForm> */}
 

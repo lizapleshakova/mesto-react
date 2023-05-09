@@ -1,5 +1,4 @@
-import {useContext } from "react";
-
+import { useContext } from "react";
 
 import Card from './Card';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -32,13 +31,13 @@ function Main(props) {
             <section className="elements">
 
                 {props.cards.map((card) => (
-                    <Card 
-                    key={card._id} 
-                    data={card} 
-                    onCardClick={props.onCardClick} 
-                    onClose={props.onClose}
-                    onCardLike={props.onCardLike}
-                    onDeleteLike={props.onDeleteLike} />
+                    <Card
+                        key={card._id}
+                        data={card}
+                        onCardClick={props.onCardClick}
+                        onClose={props.onClose}
+                        onCardLike={props.onCardLike}
+                        onDeleteLike={props.onDeleteLike} />
                 ))}
 
             </section>
