@@ -9,7 +9,7 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from './ImagePopup';
-import { CurrentUserContext } from '../contexts/CurrentUserContext'
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
