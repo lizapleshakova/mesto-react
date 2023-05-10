@@ -39,6 +39,7 @@
   },
   "homepage": "https://lizapleshakova.github.io/mesto-react/",
   "devDependencies": {
+    "eslint": "^5.6.0",
     "gh-pages": "^5.0.0"
   }
 }
